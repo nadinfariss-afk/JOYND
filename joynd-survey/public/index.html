@@ -1,0 +1,1279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>JOYND Design Survey</title>
+<meta name="description" content="A 3-minute survey to help shape JOYND, the app for friend groups.">
+<meta property="og:title" content="Help us shape JOYND">
+<meta property="og:description" content="13 quick questions, almost all tapping. About 3 minutes.">
+<meta name="theme-color" content="#F8F7F3">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap">
+<style>
+/* Layout: one phone-width column, one question per screen, sticky progress header,
+   Next button pinned to the bottom. JOYND "Warm Daylight" palette, single light look by choice. */
+:root {
+  --navy: #111827;
+  --white: #F8F7F3;
+  --orange: #FF6B35;
+  --yellow: #FFC857;
+  --green: #65B891;
+  --card: #FFFFFF;
+  --line: #E6E3DA;
+  --muted: #5B6170;
+  --soft: #EFEDE6;
+  --cream: #FFF4D6;
+  --orange-ink: #C2410C;
+  --display: "Archivo", "Arial Black", Impact, system-ui, sans-serif;
+  --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "Space Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; background: var(--white); color: var(--navy); font: 16px/1.5 var(--body); -webkit-font-smoothing: antialiased; }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus { outline: none; }
+
+.app { max-width: 560px; margin: 0 auto; min-height: 100%; display: flex; flex-direction: column; padding-inline: 16px; }
+.app.wide { max-width: 1040px; }
+
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--white); padding-block: 14px 10px; display: flex; flex-direction: column; gap: 12px; }
+.top-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.logo { font: 900 22px/1 var(--display); font-stretch: 112%; letter-spacing: 0.01em; display: inline-flex; align-items: center; }
+.logo .o { width: 0.72em; height: 0.72em; border-radius: 50%; background: var(--orange); display: inline-block; margin: 0 0.05em; }
+.step-label { font: 400 12px/1 var(--mono); letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+.progress { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 5px; }
+.progress span { height: 8px; border-radius: 99px; background: var(--soft); transition: background .25s; }
+.progress span.on:nth-child(3n+1) { background: var(--orange); }
+.progress span.on:nth-child(3n+2) { background: var(--yellow); }
+.progress span.on:nth-child(3n) { background: var(--green); }
+.linkbtn { background: none; border: 0; padding: 6px 0; font: 700 12px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--navy); text-decoration: underline; text-underline-offset: 3px; }
+
+main { flex: 1; display: flex; flex-direction: column; gap: 18px; padding-block: 12px 24px; }
+.eyebrow { font: 400 12px/1.2 var(--mono); letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin: 0; }
+h1, h2 { font-family: var(--display); font-weight: 900; font-stretch: 115%; line-height: 0.98; margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(40px, 11.5vw, 72px); text-transform: uppercase; }
+h2 { font-size: clamp(28px, 8vw, 40px); }
+.dot { color: var(--orange); }
+.lede { font-size: 17px; margin: 0; max-width: 34em; }
+.hint { font-size: 14px; color: var(--muted); margin: 0; }
+.pills { display: flex; gap: 8px; }
+.pills i { display: block; width: 44px; height: 12px; border-radius: 99px; }
+
+.steps { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.steps li { display: flex; gap: 14px; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; }
+.num { flex: none; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font: 900 16px/1 var(--display); font-stretch: 112%; }
+.n1 { background: var(--yellow); } .n2 { background: var(--orange); } .n3 { background: var(--green); }
+.steps b { display: block; font-weight: 600; }
+.steps small { color: var(--muted); font-size: 14px; }
+.notice { border-radius: 14px; padding: 14px 16px; font-size: 14px; background: var(--cream); border: 1px solid var(--yellow); }
+.notice b { font-weight: 600; }
+
+/* picture picks */
+.phones { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(220px, 80%); gap: 26px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 16px 10px; margin-inline: -16px; scrollbar-width: none; }
+.phones::-webkit-scrollbar { display: none; }
+.phone { scroll-snap-align: center; background: none; border: 0; padding: 0; text-align: left; display: flex; flex-direction: column; gap: 10px; }
+.phone .shot { border-radius: 26px; padding: 6px; border: 3px solid transparent; transition: border-color .15s, transform .15s; }
+.phone img { display: block; width: 100%; height: auto; max-width: 100%; border-radius: 20px; }
+.phone[aria-pressed="true"] .shot { border-color: var(--orange); }
+.phone:active .shot { transform: scale(0.985); }
+.cap { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; padding: 8px; border: 1.5px solid var(--line); border-radius: 16px; background: var(--card); transition: border-color .15s, background .15s; }
+.cap-name { min-width: 0; flex: 1; }
+.choose-pill { flex: 1 1 100%; text-align: center; padding: 11px 14px; border-radius: 10px; background: var(--navy); color: var(--white); font: 700 12px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; transition: background .15s, color .15s; }
+.choose-pill .cp-on { display: none; }
+.phone:hover .cap { border-color: var(--navy); }
+.phone[aria-pressed="true"] .cap { border-color: var(--orange); background: #FFF1EA; }
+.phone[aria-pressed="true"] .choose-pill { background: var(--orange); color: var(--navy); }
+.phone[aria-pressed="true"] .choose-pill .cp-off { display: none; }
+.phone[aria-pressed="true"] .choose-pill .cp-on { display: inline; }
+.badge { flex: none; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font: 900 15px/1 var(--display); font-stretch: 112%; color: var(--navy); }
+.bA { background: var(--yellow); } .bB { background: var(--orange); } .bC { background: var(--green); }
+.cap b { display: block; font-weight: 600; font-size: 16px; line-height: 1.2; }
+.cap small { color: var(--muted); font-size: 13px; }
+.phone .shot { position: relative; display: block; }
+.picked { position: absolute; left: 50%; bottom: 18px; transform: translate(-50%, 8px) scale(.9); opacity: 0; display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: 99px; background: var(--orange); color: var(--navy); font: 700 13px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; box-shadow: 0 6px 18px rgba(17,24,39,.25); transition: opacity .18s, transform .18s; pointer-events: none; }
+.phone[aria-pressed="true"] .picked { opacity: 1; transform: translate(-50%, 0) scale(1); }
+.phone[aria-pressed="true"] .cap b { color: var(--orange-ink); }
+.swipe { font: 400 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+@media (min-width: 620px) {
+  .phones { grid-auto-flow: row; grid-template-columns: repeat(3, 1fr); overflow: visible; margin-inline: 0; padding-inline: 0; }
+  .swipe { display: none; }
+}
+
+/* single-choice list */
+.choices { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.choice { width: 100%; display: flex; align-items: center; gap: 14px; text-align: left; background: var(--card); border: 1.5px solid var(--line); border-radius: 16px; padding: 14px 16px; transition: border-color .15s, background .15s; }
+.choice .radio { flex: none; width: 22px; height: 22px; border-radius: 50%; border: 2px solid #9AA0AA; display: grid; place-items: center; }
+.choice[aria-pressed="true"] { border-color: var(--navy); }
+.choice[aria-pressed="true"] .radio { border-color: var(--orange); }
+.choice[aria-pressed="true"] .radio::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--orange); }
+.choice.multi .radio { border-radius: 6px; }
+.choice.multi[aria-pressed="true"] .radio { background: var(--orange); }
+.choice.multi[aria-pressed="true"] .radio::after { content: "✓"; width: auto; height: auto; background: none; color: #fff; font-size: 13px; line-height: 1; font-weight: 700; }
+.choice b { display: block; font-weight: 600; line-height: 1.25; }
+.choice small { display: block; color: var(--muted); font-size: 14px; line-height: 1.35; }
+.choice > span:last-child { min-width: 0; }
+.choice[disabled] { opacity: .45; cursor: not-allowed; }
+
+/* chips */
+.chipset { display: flex; flex-direction: column; gap: 10px; }
+.chipset .q { font-weight: 600; font-size: 15px; }
+.chipset .q small { font-weight: 400; color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { border: 1.5px solid var(--line); background: var(--card); border-radius: 99px; padding: 9px 14px; font-size: 14px; font-weight: 500; transition: background .15s, border-color .15s; }
+.chip[aria-pressed="true"] { background: var(--navy); border-color: var(--navy); color: var(--white); }
+
+/* 5-step scale */
+.scale-block { display: flex; flex-direction: column; gap: 10px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 16px; }
+.scale-block .q { font-weight: 600; }
+.scale { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.scale button { min-height: 48px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--white); font: 900 18px/1 var(--display); font-stretch: 112%; transition: background .15s, border-color .15s; }
+.scale button[aria-pressed="true"] { background: var(--orange); border-color: var(--orange); }
+.meter-block { display: flex; flex-direction: column; gap: 14px; background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 18px 16px 14px; }
+.readout { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; min-height: 34px; }
+.readout b { font: 900 26px/1 var(--display); font-stretch: 115%; text-transform: uppercase; }
+.readout span { font: 700 13px/1 var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.meter { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; height: 170px; }
+.meter button { border: 0; background: none; padding: 0; display: grid; grid-template-rows: 1fr auto auto; justify-items: stretch; gap: 6px; cursor: pointer; }
+.meter .bar { align-self: end; display: block; border-radius: 10px 10px 6px 6px; background: var(--soft); border: 1.5px solid var(--line); transition: background .2s, transform .15s; }
+.meter button:hover .bar { transform: translateY(-2px); }
+.meter .n { font: 900 18px/1 var(--display); font-stretch: 112%; text-align: center; }
+.meter small { font: 600 11px/1.1 var(--body); color: var(--muted); text-align: center; }
+.meter button[data-on].lvl1 .bar { background: #FFE3A3; border-color: #FFE3A3; }
+.meter button[data-on].lvl2 .bar { background: var(--yellow); border-color: var(--yellow); }
+.meter button[data-on].lvl3 .bar { background: var(--orange); border-color: var(--orange); }
+.meter button[data-on].lvl4 .bar { background: #8FCBAE; border-color: #8FCBAE; }
+.meter button[data-on].lvl5 .bar { background: var(--green); border-color: var(--green); }
+.meter button[aria-pressed="true"] small { color: var(--navy); font-weight: 700; }
+.meter button:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; border-radius: 10px; }
+.ends { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; color: var(--muted); }
+.ends span:last-child { text-align: right; }
+
+.field { display: flex; flex-direction: column; gap: 8px; }
+.field label { font-weight: 600; font-size: 15px; }
+.field label small { font-weight: 400; color: var(--muted); }
+textarea { width: 100%; font: 16px/1.45 var(--body); color: var(--navy); background: var(--card); border: 1.5px solid var(--line); border-radius: 14px; padding: 12px 14px; resize: vertical; min-height: 76px; }
+textarea:focus { outline: none; border-color: var(--navy); }
+
+.actions { position: sticky; bottom: 0; background: linear-gradient(to bottom, rgba(248,247,243,0), var(--white) 28%); padding-block: 20px calc(16px + env(safe-area-inset-bottom, 0px)); display: flex; gap: 10px; margin-top: auto; }
+.btn { flex: 1; border: 0; border-radius: 14px; padding: 16px 18px; min-height: 54px; font: 700 14px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; background: var(--orange); color: var(--navy); transition: opacity .15s, transform .1s; }
+.btn:active { transform: scale(0.99); }
+.btn[disabled] { opacity: .38; cursor: not-allowed; }
+.btn.ghost { flex: 0 0 auto; background: var(--card); border: 1.5px solid var(--line); padding-inline: 20px; }
+
+.thanks h1 { font-size: clamp(52px, 16vw, 96px); }
+.copybox textarea { min-height: 200px; font: 13px/1.5 var(--mono); }
+
+/* results */
+.res-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; }
+.count { display: flex; align-items: baseline; gap: 10px; }
+.count strong { font: 900 64px/0.9 var(--display); font-stretch: 115%; font-variant-numeric: tabular-nums; }
+.count span { color: var(--muted); }
+.live { font: 400 12px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); display: inline-flex; gap: 8px; align-items: center; }
+.live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
+.grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+@media (min-width: 860px) { .grid { grid-template-columns: 1fr 1fr; } .grid .full { grid-column: 1 / -1; } }
+.section-label { grid-column: 1 / -1; margin-top: 8px; }
+.panel { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.panel h3 { font: 900 19px/1.15 var(--display); font-stretch: 112%; margin: 0; text-wrap: balance; }
+.panel .sub { font-size: 14px; color: var(--muted); margin: -8px 0 0; }
+.hbar { display: grid; grid-template-columns: minmax(96px, 160px) 1fr auto; gap: 12px; align-items: center; }
+.hbar .lbl { font-weight: 600; font-size: 14px; line-height: 1.25; min-width: 0; }
+.hbar .lbl small { display: block; font-weight: 400; color: var(--muted); font-size: 12px; }
+.track { height: 24px; background: var(--soft); border-radius: 8px; overflow: hidden; }
+.fill { display: block; height: 100%; border-radius: 8px; transition: width .4s ease; }
+.val { font: 700 13px/1 var(--mono); font-variant-numeric: tabular-nums; text-align: right; min-width: 4.6em; }
+.bars { display: grid; gap: 10px; }
+.lead { font-size: 15px; margin: 0; }
+.lead b { font-weight: 600; }
+.reasons { display: grid; gap: 8px; border-top: 1px solid var(--line); padding-top: 12px; }
+.reasons-row { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; }
+.reasons-row .badge { width: 24px; height: 24px; font-size: 12px; }
+.reasons-row .tags { display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
+.tag { background: var(--white); border: 1px solid var(--line); border-radius: 99px; padding: 3px 10px; font-size: 13px; }
+.tag b { font-family: var(--mono); font-size: 12px; margin-left: 4px; }
+.none { color: var(--muted); font-size: 14px; font-style: italic; }
+.dist { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; align-items: end; height: 96px; }
+.dist div { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 4px; height: 100%; }
+.dist i { display: block; width: 100%; border-radius: 6px 6px 2px 2px; background: var(--navy); min-height: 3px; }
+.dist div.top i { background: var(--orange); }
+.dist span { font: 700 12px/1 var(--mono); font-variant-numeric: tabular-nums; }
+.dist-axis { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; text-align: center; font: 400 11px/1.2 var(--mono); color: var(--muted); }
+.quotes { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.quotes li { background: var(--white); border-radius: 10px; padding: 9px 12px; font-size: 14px; overflow-wrap: anywhere; }
+.empty { padding: 28px 20px; border: 2px dashed var(--line); border-radius: 20px; display: grid; gap: 8px; }
+
+.solo { display: flex; justify-content: center; }
+.solo img { width: min(46%, 200px); height: auto; max-width: 100%; border-radius: 22px; }
+
+/* DEBUG ONLY: remove before release (see DEBUG flag in script) */
+.debugbar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 8px 10px; border: 2px dashed var(--orange); border-radius: 12px; background: #FFF1EA; }
+.debugbar .dbg-tag { font: 700 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--orange-ink); }
+.debugbar button, .debugbar select { font: 600 13px/1 var(--body); color: var(--navy); background: var(--card); border: 1.5px solid var(--line); border-radius: 8px; padding: 7px 10px; }
+.debugbar select { flex: 1; min-width: 0; }
+
+[hidden] { display: none !important; }
+.other-input { display: block; width: 100%; margin-top: 8px; font: 16px/1.4 var(--body); color: var(--navy); background: var(--card); border: 1.5px solid var(--navy); border-radius: 14px; padding: 12px 14px; }
+.other-input:focus { outline: none; box-shadow: 0 0 0 3px rgba(255,107,53,.35); border-color: var(--orange); }
+.top-row .step-label { margin-left: auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.top-row .linkbtn { flex: none; white-space: nowrap; }
+.lang { display: inline-flex; border: 1.5px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--card); flex: none; }
+.lang button { border: 0; background: none; padding: 7px 10px; font: 700 12px/1 var(--mono); letter-spacing: .1em; color: var(--muted); min-height: 32px; }
+.lang button[aria-pressed="true"] { background: var(--navy); color: var(--white); }
+.phonewrap { position: relative; scroll-snap-align: center; min-width: 0; }
+.phonewrap .phone { width: 100%; }
+.zoombtn { position: absolute; top: 14px; right: 14px; height: 40px; padding: 0 14px 0 11px; border-radius: 99px; border: 2px solid var(--white); background: var(--navy); color: var(--white); display: inline-flex; align-items: center; gap: 6px; font: 700 12px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; box-shadow: 0 4px 12px rgba(17,24,39,.25); animation: zoomPulse 1.6s ease-out .6s 2; }
+.zoombtn svg { width: 18px; height: 18px; }
+@keyframes zoomPulse { 0% { box-shadow: 0 0 0 0 rgba(255,107,53,.65), 0 4px 12px rgba(17,24,39,.25); } 70% { box-shadow: 0 0 0 14px rgba(255,107,53,0), 0 4px 12px rgba(17,24,39,.25); } 100% { box-shadow: 0 0 0 0 rgba(255,107,53,0), 0 4px 12px rgba(17,24,39,.25); } }
+@media (prefers-reduced-motion: reduce) { .zoombtn { animation: none; } }
+.zoomtip { margin: 0; display: flex; align-items: center; gap: 10px; background: #FFF1EA; border: 1.5px solid #FFC9B3; border-radius: 14px; padding: 10px 14px; font-size: 14px; font-weight: 600; color: var(--navy); }
+.zt-icon { flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--orange); color: var(--navy); display: grid; place-items: center; }
+.zt-icon svg { width: 16px; height: 16px; }
+.viewer { position: fixed; inset: 0; z-index: 50; color: var(--white); display: flex; flex-direction: column; padding: calc(10px + env(safe-area-inset-top, 0px)) 0 calc(12px + env(safe-area-inset-bottom, 0px)); gap: 8px; touch-action: none; overscroll-behavior: contain; }
+.v-backdrop { position: absolute; inset: 0; background: #0E131F; opacity: 0; z-index: -1; }
+.v-top, .v-bottom { display: flex; align-items: center; gap: 10px; max-width: 560px; width: 100%; margin: 0 auto; padding-inline: 12px; transition: opacity .2s; }
+.v-name { min-width: 0; flex: 1; }
+.v-name b { display: block; font: 900 18px/1.1 var(--display); font-stretch: 112%; }
+.v-name small { color: #C9CCD3; font-size: 13px; }
+.v-dots { display: flex; gap: 6px; }
+.v-dots i { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.3); transition: background .2s, transform .2s; }
+.v-dots i.on { background: var(--white); transform: scale(1.25); }
+.v-close { width: 42px; height: 42px; flex: none; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.3); background: transparent; color: var(--white); font-size: 18px; }
+.v-stage { flex: 1; min-height: 0; position: relative; overflow: hidden; cursor: zoom-in; }
+.v-stage.zoomed { cursor: grab; }
+.v-stage.dragging { cursor: grabbing; }
+.v-track { position: absolute; inset: 0; display: flex; will-change: transform; }
+.v-slide { flex: 0 0 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.v-slide img { display: block; border-radius: 24px; will-change: transform; transform-origin: 50% 50%; user-select: none; -webkit-user-drag: none; pointer-events: none; box-shadow: 0 20px 60px rgba(0,0,0,.35); }
+.v-tip { margin: 0; text-align: center; font-size: 12px; color: #C9CCD3; transition: opacity .2s; }
+.v-arrow { width: 54px; height: 54px; flex: none; border-radius: 14px; border: 1.5px solid rgba(255,255,255,.3); background: transparent; color: var(--white); font-size: 28px; line-height: 1; }
+.v-bottom .btn { flex: 1; }
+.v-bottom .btn.chosen { background: var(--green); }
+.viewer.ui-hidden .v-top, .viewer.ui-hidden .v-bottom, .viewer.ui-hidden .v-tip { opacity: 0; pointer-events: none; }
+.zoomhint { margin: -8px 0 0; font-size: 13px; color: var(--muted); }
+.keyform { display: grid; gap: 10px; max-width: 420px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px; }
+.keyform label { font-weight: 600; }
+.keyrow { display: flex; gap: 10px; }
+.keyrow input { flex: 1; min-width: 0; font: 16px var(--body); border: 1.5px solid var(--line); border-radius: 12px; padding: 12px 14px; background: var(--white); color: var(--navy); }
+.keyrow .btn { flex: 0 0 auto; }
+.keyerr { margin: 0; color: var(--orange-ink); font-weight: 600; font-size: 14px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+</head>
+<body>
+<div class="app" id="app">
+  <header class="top">
+    <div class="top-row">
+      <span class="logo" aria-label="JOYND">J<span class="o"></span>YND</span>
+      <span class="step-label" id="stepLabel">Design research</span>
+      <div class="lang" role="group" aria-label="Language"><button data-lang="en" aria-pressed="true">EN</button><button data-lang="da" aria-pressed="false">DA</button></div>
+      <button class="linkbtn" id="toResults" hidden>Results</button>
+    </div>
+    <div class="progress" id="progress" aria-hidden="true"></div>
+    <div class="debugbar" id="debugbar" hidden>
+      <span class="dbg-tag">Debug</span>
+      <button id="dbgPrev" aria-label="Previous screen">◀ Prev</button>
+      <select id="dbgJump" aria-label="Jump to screen"></select>
+      <button id="dbgNext" aria-label="Skip to next screen">Skip ▶</button>
+    </div>
+  </header>
+  <main id="main"></main>
+</div>
+<div class="viewer" id="viewer" hidden role="dialog" aria-modal="true" aria-labelledby="vTitle">
+  <div class="v-backdrop" id="vBack"></div>
+  <div class="v-top" id="vTop"><span class="badge" id="vBadge"></span><div class="v-name"><b id="vTitle"></b><small id="vDesc"></small></div><div class="v-dots" id="vDots" aria-hidden="true"></div><button class="v-close" id="vClose" aria-label="Close">✕</button></div>
+  <div class="v-stage" id="vStage"><div class="v-track" id="vTrack"></div></div>
+  <p class="v-tip" id="vTip">Pinch or double-tap to zoom · swipe to compare</p>
+  <div class="v-bottom" id="vBottom"><button class="v-arrow" id="vPrev" aria-label="Previous option">‹</button><button class="btn" id="vChoose">Choose</button><button class="v-arrow" id="vNext" aria-label="Next option">›</button></div>
+</div>
+
+<script>
+/* ---------- Language: English / Dansk ----------
+   The page is written in English. When Danish is chosen, every visible text
+   is swapped for its Danish version below. Answers are saved the same way in
+   both languages, so results from Danish and English respondents combine. */
+(() => {
+  const DA = {
+    // intro + navigation
+    "Help us shape JOYND": "Hjælp os med at forme JOYND",
+    "Design research · V6 wireframe": "Designundersøgelse · V6-wireframe",
+    "Design research": "Designundersøgelse",
+    "Look": "Kig", "Some questions show phone screens in three versions.": "Nogle spørgsmål viser telefonskærme i tre versioner.",
+    "Tap": "Tryk", "Pick what you like. Gut feeling is fine.": "Vælg det, du bedst kan lide. Mavefornemmelsen er fin.",
+    "Next": "Næste", "Skip anything optional.": "Spring det valgfrie over.",
+    "Start": "Start", "Back": "Tilbage", "All done": "Færdig",
+    "You've answered before. Sending again replaces your earlier answers.": "Du har svaret før. Hvis du sender igen, erstatter det dine tidligere svar.",
+    "Heads up:": "Bemærk:",
+    "answers can't be saved from this link for your account. You can still take the survey, and at the end you'll get your answers as text to send to the JOYND team.": "dine svar kan ikke gemmes fra dette link med din konto. Du kan stadig tage undersøgelsen, og til sidst får du dine svar som tekst, du kan sende til JOYND-teamet.",
+    // parts
+    "Today": "I dag", "New people": "Nye mennesker", "The idea": "Idéen", "Features": "Funktioner",
+    "Layout & look": "Layout og udseende", "Wrap-up": "Afslutning", "The idea & features": "Idéen og funktionerne",
+    // generic question UI
+    "Tap all that apply.": "Tryk på alle, der passer.", "Pick one.": "Vælg én.",
+    "Pick A, B or C": "Vælg A, B eller C", "Pick one": "Vælg én", "Tap at least one": "Tryk på mindst én",
+    "Send answers": "Send svar", "Sending…": "Sender…",
+    "Swipe to see all three →": "Swipe for at se alle tre →",
+    "Tap the magnifier to see a screen up close, then pinch to zoom.": "Tryk på luppen for at se en skærm tæt på.",
+    "Zoom in": "Zoom ind", "Pinch or double-tap to zoom · swipe to compare": "Knib eller dobbelttryk for at zoome · swipe for at sammenligne",
+    "Tap a screen or": "Tryk på en skærm eller", "to pick it. Tap Zoom to see it up close.": "for at vælge den. Tryk på Zoom for at se den tæt på.",
+    "✓ Chosen": "✓ Valgt", "Zoom": "Zoom",
+    "Close": "Luk", "Previous option": "Forrige mulighed", "Next option": "Næste mulighed", "Choose": "Vælg", "Options": "Muligheder",
+    "What made you pick it?": "Hvorfor valgte du den?", "Optional, tap any": "Valgfrit, tryk på dem, der passer",
+    "Easy to read": "Let at læse", "Looks good": "Ser godt ud", "Fast to use": "Hurtig at bruge",
+    "Feels fun": "Føles sjov", "Feels calm": "Føles rolig", "Not sure": "Ved ikke",
+    // Q1
+    "How do your friend groups stay in touch today?": "Hvordan holder dine vennegrupper kontakten i dag?",
+    "WhatsApp / Messenger groups": "WhatsApp-/Messenger-grupper", "Instagram / Snapchat": "Instagram / Snapchat",
+    "Your pick": "Dit valg", "Other": "Andet", "Type it here…": "Skriv det her…", "A feature you'd want": "En funktion, du gerne vil have",
+    "A poll or a shared calendar": "En afstemning eller en fælles kalender",
+    "Typed under \u201cOther\u201d": "Skrevet under \u201cAndet\u201d", "Nothing typed yet": "Intet skrevet endnu",
+    "Messages": "Beskeder (SMS)", "Discord": "Discord", "Mostly in person": "Mest ansigt til ansigt",
+    // Q2
+    "How does your group plan meetups today?": "Hvordan planlægger jeres gruppe at ses i dag?",
+    "We figure it out in the group chat": "Vi finder ud af det i gruppechatten",
+    "One person organises everything": "Én person arrangerer det hele",
+    "A poll in the chat": "En afstemning i chatten", "A shared calendar": "En fælles kalender",
+    "Facebook or Instagram events": "Facebook- eller Instagram-begivenheder",
+    "Last minute, we just show up": "I sidste øjeblik – vi dukker bare op",
+    // Q3
+    "What frustrates you most about making plans with friends?": "Hvad frustrerer dig mest, når I skal lave planer med venner?",
+    "Hard to find a time that works for everyone": "Svært at finde et tidspunkt, der passer alle",
+    "Plans get lost in the chat": "Planer drukner i chatten",
+    "People don't reply or confirm": "Folk svarer eller bekræfter ikke",
+    "Nobody takes the lead": "Ingen tager føringen", "Hard to agree on a place": "Svært at blive enige om et sted",
+    "Plans change or get cancelled last minute": "Planer ændres eller aflyses i sidste øjeblik",
+    "Nothing, it works fine": "Ingenting, det fungerer fint",
+    // Q4
+    "When you meet someone new at a bar or event, how do you stay in touch?": "Når du møder en ny person på en bar eller til et event, hvordan holder I så kontakten?",
+    "Add each other on social media (Instagram, Snapchat, WhatsApp)": "Tilføjer hinanden på sociale medier (Instagram, Snapchat, WhatsApp)",
+    "Swap phone numbers": "Bytter telefonnumre",
+    "Through mutual friends": "Gennem fælles venner", "We usually lose touch": "Vi mister som regel kontakten",
+    // Q5
+    "Would you want one app where your group can chat, plan and share memories together?": "Kunne du tænke dig én app, hvor jeres gruppe kan chatte, planlægge og dele minder sammen?",
+    "Yes, I'd use it": "Ja, jeg ville bruge den", "Maybe, depends on the features": "Måske, det afhænger af funktionerne",
+    "No, my current apps are enough": "Nej, mine nuværende apps er nok",
+    // Q6
+    "Which features would you actually use?": "Hvilke funktioner ville du faktisk bruge?",
+    "Group chat": "Gruppechat", "Plan a meetup": "Planlæg at ses", "When and where": "Hvornår og hvor",
+    "“Who's free?” planner": "“Hvem har tid?”-planlægger", "Find the evening that works": "Find den aften, der passer",
+    "Shared photo album & memories": "Fælles fotoalbum og minder", "Polls and quick votes": "Afstemninger og hurtige valg",
+    "Reminders before plans": "Påmindelser før planer", "Join a group by QR code": "Bliv en del af en gruppe med QR-kode",
+    "Recap of past meetups": "Opsummering af tidligere aftaler",
+    // Q7
+    "Who would you use it with?": "Hvem ville du bruge den med?",
+    "Close friends": "Nære venner", "Classmates or study group": "Klassekammerater eller studiegruppe",
+    "People I met at bars or events": "Folk, jeg har mødt på barer eller til events",
+    "Sports team or club": "Sportshold eller klub", "Family": "Familie",
+    // Q8
+    "Which home layout helps you most?": "Hvilket layout på startskærmen hjælper dig mest?",
+    "Same content arranged three ways. Which gets you to what matters fastest?": "Samme indhold sat op på tre måder. Hvilken får dig hurtigst hen til det vigtige?",
+    "Event first": "Event først", "Big RSVP card": "Stort tilmeldingskort", "Tiles": "Fliser",
+    "Dashboard grid": "Dashboard-gitter", "Timeline": "Tidslinje", "Today's feed": "Dagens feed",
+    // Q9
+    "Which chat layout would you like for your circle?": "Hvilket chat-layout vil du gerne have til din circle?",
+    "Same conversation, three ways to lay it out.": "Samme samtale, tre måder at sætte den op på.",
+    "Classic chat": "Klassisk chat", "Bubbles, newest at the bottom": "Bobler, nyeste nederst",
+    "Topic threads": "Emnetråde", "One thread per topic": "Én tråd pr. emne",
+    "Pinned + chat": "Fastgjort + chat", "Plans and polls stay on top": "Planer og afstemninger bliver øverst",
+    // Q10
+    "Which calendar overview would you like to see?": "Hvilket kalenderoverblik vil du gerne se?",
+    "Three ways to see when your circle is free. Which one tells you the best day fastest?": "Tre måder at se, hvornår din circle har tid. Hvilken viser dig hurtigst den bedste dag?",
+    "Week columns": "Ugekolonner", "Who's free, day by day": "Hvem har tid, dag for dag",
+    "Month calendar": "Månedskalender", "Greener = more people free": "Grønnere = flere har tid",
+    "Agenda list": "Dagsliste", "Next days with plans": "De næste dage med planer",
+    // Q11
+    "How would you like to set when you're free?": "Hvordan vil du helst angive, hvornår du har tid?",
+    "Three ways to mark your own evenings. Only your circle sees it.": "Tre måder at markere dine egne aftener på. Kun din circle kan se det.",
+    "Week grid": "Ugeskema", "Tap Free, Maybe or Busy per evening": "Tryk Fri, Måske eller Optaget for hver aften",
+    "Quick switches": "Hurtige kontakter", "Tonight, weekend, weekdays": "I aften, weekend, hverdage",
+    "Calendar sync": "Kalendersynkronisering", "Filled in from your calendar": "Udfyldt fra din kalender",
+    // Q12
+    "Which home screen feels most like JOYND?": "Hvilken startskærm føles mest som JOYND?",
+    "Same layout in three colour directions. Tap the one you'd want on your phone.": "Samme layout i tre farveretninger. Tryk på den, du helst vil have på din telefon.",
+    "Light & calm": "Lyst og roligt", "Dark & premium": "Mørkt og eksklusivt", "Bold yellow header": "Kraftig gul top",
+    // Q13
+    "How likely are you to try JOYND?": "Hvor sandsynligt er det, at du vil prøve JOYND?",
+    "Tap a bar. A low score helps us too.": "Tryk på en søjle. En lav score hjælper os også.",
+    "Tap a bar": "Tryk på en søjle",
+    "Not likely": "Ikke sandsynligt", "Probably not": "Nok ikke", "Maybe": "Måske", "Probably": "Sandsynligvis", "Very likely": "Meget sandsynligt",
+    "No": "Nej", "Unlikely": "Usandsynligt", "Likely": "Sandsynligt", "Yes!": "Ja!",
+    "Anything else?": "Andet, du vil sige?", "Optional": "Valgfrit", "A thought, an idea, a worry…": "En tanke, en idé, en bekymring…",
+    // thanks
+    "That's it": "Det var det", "Thank you": "Tak",
+    "Your answers are in. Your picks decide which colours, layouts and features go into the next JOYND build.": "Dine svar er modtaget. Dine valg afgør, hvilke farver, layouts og funktioner der kommer med i den næste version af JOYND.",
+    "Your picks decide which colours, layouts and features go into the next JOYND build.": "Dine valg afgør, hvilke farver, layouts og funktioner der kommer med i den næste version af JOYND.",
+    "We couldn't reach the server, so your answers weren't saved.": "Vi kunne ikke få forbindelse til serveren, så dine svar blev ikke gemt.",
+    "Your answers weren't saved automatically.": "Dine svar blev ikke gemt automatisk.",
+    "Copy them below and send them to the person who shared this survey.": "Kopiér dem herunder, og send dem til den, der delte undersøgelsen med dig.",
+    "Your answers": "Dine svar", "Copy answers": "Kopiér svar", "Copied": "Kopieret", "Selected: copy it now": "Markeret – kopiér nu",
+    "JOYND design survey": "JOYND-designundersøgelse",
+    // results
+    "Results": "Resultater", "Results password": "Adgangskode til resultater", "Open": "Åbn",
+    "This is the RESULTS_KEY you set when starting the server.": "Det er den RESULTS_KEY, du valgte, da du startede serveren.",
+    "That password is wrong. Try again.": "Forkert adgangskode. Prøv igen.",
+    "Open survey": "Åbn undersøgelsen", "Survey": "Undersøgelse",
+    "Results are private": "Resultaterne er private", "Only the survey owner can see the results.": "Kun ejeren af undersøgelsen kan se resultaterne.",
+    "response": "svar", "responses": "svar", "Live · updates by itself": "Live · opdaterer af sig selv",
+    "Loading answers…": "Henter svar…", "No answers yet": "Ingen svar endnu", "No answers yet.": "Ingen svar endnu.",
+    "A chart for every question appears here as soon as the first person sends their answers. Take the survey yourself to see how it looks.": "Et diagram for hvert spørgsmål dukker op her, så snart den første sender sine svar. Tag selv undersøgelsen for at se, hvordan det ser ud.",
+    "How many people use each one.": "Hvor mange der bruger hver af dem.",
+    "How many people plan each way.": "Hvor mange der planlægger på hver måde.",
+    "How many people picked each frustration, biggest first.": "Hvor mange der valgte hver frustration, største først.",
+    "How many people use each way to connect.": "Hvor mange der bruger hver måde at holde kontakten på.",
+    "How many people would use each feature, most wanted first.": "Hvor mange der ville bruge hver funktion, mest ønskede først.",
+    "How many people would use it with each group.": "Hvor mange der ville bruge den med hver gruppe.",
+    "1 = not likely, 5 = very likely.": "1 = ikke sandsynligt, 5 = meget sandsynligt.",
+    "Why they picked it": "Hvorfor de valgte den", "No reasons tapped": "Ingen grunde valgt", "No comments yet.": "Ingen kommentarer endnu.",
+    "Right in the middle": "Lige i midten", "Leans": "Hælder mod", "not likely": "ikke sandsynligt", "very likely": "meget sandsynligt",
+    "Tied at the top:": "Delt førsteplads:", "and": "og",
+    // debug bar
+    "Intro": "Intro", "Debug": "Debug", "Jump to screen": "Hop til skærm", "Previous screen": "Forrige skærm",
+    "Skip to next screen": "Spring til næste skærm", "◀ Prev": "◀ Forrige", "Skip ▶": "Spring over ▶", "Language": "Sprog",
+  };
+  const RULES = [
+    [/^(\d+) quick questions about the idea, the features and the layout\. About 3 minutes, almost all tapping\.$/, (m) => `${m[1]} hurtige spørgsmål om idéen, funktionerne og layoutet. Ca. 3 minutter, næsten kun tryk.`],
+    [/^(\d+) of (\d+) picked$/, (m) => `${m[1]} af ${m[2]} valgt`],
+    [/^(\d+) picked$/, (m) => `${m[1]} valgt`],
+    [/^(\d+) of (\d+)$/, (m) => `${m[1]} af ${m[2]}`],
+    [/^(\d+) \/ 5$/, (m) => `${m[1]} / 5`],
+    [/^(\d+) · (.+)$/, (m) => `${m[1]} · ${tr(m[2])}`],
+    [/^(\d+)\. (.+)$/, (m) => `${m[1]}. ${tr(m[2])}`],
+    [/^(\d+), (.+)$/, (m) => `${m[1]}, ${tr(m[2])}`],
+    [/^Option ([ABC]), (.+)$/, (m) => `Mulighed ${m[1]}, ${tr(m[2])}`],
+    [/^([ABC]) · (.+)$/, (m) => `${m[1]} · ${tr(m[2])}`],
+    [/^(.+) version of the screen$/, (m) => `${tr(m[1])} – version af skærmen`],
+    [/^Choose ([ABC])$/, (m) => `Vælg ${m[1]}`],
+    [/^✓ ([ABC])$/, (m) => `✓ ${m[1]}`],
+    [/^leads, (?:picked|chosen) by (\d+) of (\d+)\.$/, (m) => `fører, valgt af ${m[1]} ud af ${m[2]}.`],
+    [/^, with (\d+) each\.$/, (m) => `, med ${m[1]} hver.`],
+    [/^· average ([\d.]+) of 5$/, (m) => `· gennemsnit ${m[1].replace(".", ",")} ud af 5`],
+    [/^← (.+)$/, (m) => `← ${tr(m[1])}`],
+    [/^(.+) →$/, (m) => `${tr(m[1])} →`],
+  ];
+  let lang = "en";
+  function tr(t) {
+    if (lang !== "da") return t;
+    if (Object.prototype.hasOwnProperty.call(DA, t)) return DA[t];
+    for (const [re, fn] of RULES) { const m = t.match(re); if (m) return fn(m); }
+    if (!/[?.]$/.test(t) && DA[t + "?"]) return DA[t + "?"].replace(/\?$/, "");   // headings print the "?" separately
+    return t;
+  }
+  function trText(v) {
+    if (v.includes("\n")) return v.split("\n").map(trText).join("\n");
+    const lead = v.match(/^\s*/)[0], trail = v.match(/\s*$/)[0], core = v.trim();
+    return core ? lead + tr(core) + trail : v;
+  }
+  const orig = new WeakMap();
+  const ATTRS = ["placeholder", "aria-label", "alt"];
+  function translate(root) {
+    if (!root) return;
+    const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    let n;
+    while ((n = w.nextNode())) {
+      if (/^(SCRIPT|STYLE|TITLE)$/.test(n.parentNode.nodeName)) continue;
+      // Re-read the source text if the page changed it since we last translated.
+      const known = orig.get(n);
+      if (!known || (n.nodeValue !== known.out)) orig.set(n, { src: n.nodeValue });
+      const rec = orig.get(n);
+      const out = trText(rec.src);
+      rec.out = out;
+      if (n.nodeValue !== out) n.nodeValue = out;
+    }
+    root.querySelectorAll && root.querySelectorAll("[placeholder],[aria-label],[alt]").forEach((el) => {
+      for (const a of ATTRS) {
+        if (!el.hasAttribute(a)) continue;
+        const key = "data-src-" + a, cur = el.getAttribute(a), last = el.getAttribute("data-out-" + a);
+        if (!el.hasAttribute(key) || cur !== last) el.setAttribute(key, cur);
+        const out = trText(el.getAttribute(key));
+        el.setAttribute("data-out-" + a, out);
+        if (cur !== out) el.setAttribute(a, out);
+      }
+    });
+    if (root === document.body || root.contains?.(document.getElementById("app"))) {
+      // Only write when something actually changes: every write counts as a page change,
+      // and writing unconditionally here made the page re-translate itself forever.
+      if (document.documentElement.lang !== lang) document.documentElement.lang = lang;
+      const title = lang === "da" ? "JOYND designundersøgelse" : "JOYND Design Survey";
+      if (document.title !== title) document.title = title;
+      document.querySelectorAll("[data-lang]").forEach((b) => { const v = String(b.dataset.lang === lang); if (b.getAttribute("aria-pressed") !== v) b.setAttribute("aria-pressed", v); });
+    }
+  }
+  function setLang(l) {
+    lang = l === "da" ? "da" : "en";
+    try { localStorage.setItem("joynd_lang", lang); } catch {}
+    if (window.__rerender) window.__rerender();
+    translate(document.body);
+  }
+  let saved = null; try { saved = localStorage.getItem("joynd_lang"); } catch {}
+  const urlLang = new URLSearchParams(location.search).get("lang");
+  lang = urlLang === "da" || urlLang === "en" ? urlLang : saved || ((navigator.language || "").toLowerCase().startsWith("da") ? "da" : "en");
+  // Translate anything the page draws or changes, as soon as it appears.
+  let queued = false;
+  let burst = 0, burstStart = 0;
+  const mo = new MutationObserver(() => {
+    if (queued || lang !== "da") return;
+    const now = performance.now();
+    if (now - burstStart > 1000) { burstStart = now; burst = 0; }
+    if (++burst > 60) return;   // safety net: never let translating lock up the page
+    queued = true;
+    // a short delay (not a microtask) so the browser always gets to draw and respond in between
+    setTimeout(() => { queued = false; translate(document.body); }, 0);
+  });
+  document.addEventListener("DOMContentLoaded", () => {
+    mo.observe(document.body, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ATTRS });
+    translate(document.body);
+  });
+  window.__tr = translate;
+  window.__setLang = setLang;
+  window.__lang = () => lang;
+})();
+</script>
+
+<script>
+(() => {
+  /* ⚠️ DEBUG: lets the survey owner skip and jump between questions without answering.
+     It only appears when you open the survey with ?debug at the end of the link, but set this to false (or delete the debug bar)
+     BEFORE sending the survey out. */
+  const DEBUG = false;
+  const DEBUG_ON = DEBUG && new URLSearchParams(location.search).has("debug");
+
+  /* ---------- the questions ---------- */
+  const FEATS = [
+        { id: "chat", name: "Group chat" },
+        { id: "plan", name: "Plan a meetup", desc: "When and where" },
+        { id: "free", name: "\u201cWho's free?\u201d planner", desc: "Find the evening that works" },
+        { id: "memories", name: "Shared photo album & memories" },
+        { id: "polls", name: "Polls and quick votes" },
+        { id: "reminders", name: "Reminders before plans" },
+        { id: "qr", name: "Join a group by QR code" },
+        { id: "recap", name: "Recap of past meetups" },
+      ];
+  const ZOOM_ICON = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21M10.5 7.5v6M7.5 10.5h6"/></svg>';
+  const WHY = ["Easy to read", "Looks good", "Feels fun", "Feels calm", "Not sure"];
+  const Q = [
+    { id: "today", type: "multi", part: "Today",
+      title: "How do your friend groups stay in touch today?",
+      hint: "Tap all that apply.",
+      sub: "How many people use each one.",
+      options: [
+        { id: "whatsapp", name: "WhatsApp / Messenger groups" },
+        { id: "insta", name: "Instagram / Snapchat" },
+        { id: "imessage", name: "Messages" },
+        { id: "inperson", name: "Mostly in person" },
+        { id: "other", name: "Other", other: true },
+      ] },
+    { id: "planning", type: "multi", part: "Today",
+      title: "How does your group plan meetups today?",
+      hint: "Tap all that apply.",
+      sub: "How many people plan each way.",
+      options: [
+        { id: "chat", name: "We figure it out in the group chat" },
+        { id: "organiser", name: "One person organises everything" },
+        { id: "poll", name: "A poll or a shared calendar" },
+        { id: "lastminute", name: "Last minute, we just show up" },
+        { id: "other", name: "Other", other: true },
+      ] },
+    { id: "pain", type: "multi", part: "Today",
+      title: "What frustrates you most about making plans with friends?",
+      hint: "Tap all that apply.",
+      sub: "How many people picked each frustration, biggest first.",
+      options: [
+        { id: "time", name: "Hard to find a time that works for everyone" },
+        { id: "lost", name: "Plans get lost in the chat" },
+        { id: "noreply", name: "People don't reply or confirm" },
+        { id: "cancel", name: "Plans change or get cancelled last minute" },
+        { id: "other", name: "Other", other: true },
+      ] },
+    { id: "connect", type: "multi", part: "New people",
+      title: "When you meet someone new at a bar or event, how do you stay in touch?",
+      hint: "Tap all that apply.",
+      sub: "How many people use each way to connect.",
+      options: [
+        { id: "social", name: "Add each other on social media (Instagram, Snapchat, WhatsApp)" },
+        { id: "number", name: "Swap phone numbers" },
+        { id: "mutual", name: "Through mutual friends" },
+        { id: "lose", name: "We usually lose touch" },
+        { id: "other", name: "Other", other: true },
+      ] },
+    { id: "want", type: "single", part: "The idea",
+      title: "Would you want one app where your group can chat, plan and share memories together?",
+      hint: "Pick one.",
+      options: [
+        { id: "yes", name: "Yes, I'd use it" },
+        { id: "maybe", name: "Maybe, depends on the features" },
+        { id: "no", name: "No, my current apps are enough" },
+      ] },
+    { id: "features", type: "multi", part: "Features",
+      title: "Which features would you actually use?",
+      hint: "Tap all that apply.",
+      sub: "How many people would use each feature, most wanted first.",
+      options: [
+        { id: "chat", name: "Group chat" },
+        { id: "plan", name: "Plan a meetup", desc: "When and where" },
+        { id: "free", name: "\u201cWho's free?\u201d planner", desc: "Find the evening that works" },
+        { id: "memories", name: "Shared photo album & memories" },
+        { id: "other", name: "Other", desc: "A feature you'd want", other: true },
+      ] },
+    { id: "who", type: "multi", part: "Features",
+      title: "Who would you use it with?",
+      hint: "Tap all that apply.",
+      sub: "How many people would use it with each group.",
+      options: [
+        { id: "close", name: "Close friends" },
+        { id: "class", name: "Classmates or study group" },
+        { id: "met", name: "People I met at bars or events" },
+        { id: "sport", name: "Sports team or club" },
+      ] },
+    { id: "home", type: "image", part: "Layout & look",
+      title: "Which home layout helps you most?",
+      hint: "Same content arranged three ways. Which gets you to what matters fastest?",
+      options: [
+        { id: "A", name: "Event first", desc: "Big RSVP card", img: "home-a.webp" },
+        { id: "B", name: "Tiles", desc: "Dashboard grid", img: "home-b.webp" },
+        { id: "C", name: "Timeline", desc: "Today's feed", img: "home-c.webp" },
+      ], why: WHY },
+    { id: "chatlayout", type: "image", part: "Layout & look",
+      title: "Which chat layout would you like for your circle?",
+      hint: "Same conversation, three ways to lay it out.",
+      options: [
+        { id: "A", name: "Classic chat", desc: "Bubbles, newest at the bottom", img: "chatn-a.webp" },
+        { id: "B", name: "Topic threads", desc: "One thread per topic", img: "chatn-b.webp" },
+        { id: "C", name: "Pinned + chat", desc: "Plans and polls stay on top", img: "chatn-c.webp" },
+      ], why: WHY },
+    { id: "calendar", type: "image", part: "Layout & look",
+      title: "Which calendar overview would you like to see?",
+      hint: "Three ways to see when your circle is free. Which one tells you the best day fastest?",
+      options: [
+        { id: "A", name: "Week columns", desc: "Who's free, day by day", img: "cal-a.webp" },
+        { id: "B", name: "Month calendar", desc: "Greener = more people free", img: "cal-b.webp" },
+        { id: "C", name: "Agenda list", desc: "Next days with plans", img: "cal-c.webp" },
+      ], why: WHY },
+    { id: "setfree", type: "image", part: "Layout & look",
+      title: "How would you like to set when you're free?",
+      hint: "Three ways to mark your own evenings. Only your circle sees it.",
+      options: [
+        { id: "A", name: "Week grid", desc: "Tap Free, Maybe or Busy per evening", img: "free-a.webp" },
+        { id: "B", name: "Quick switches", desc: "Tonight, weekend, weekdays", img: "set-b.webp" },
+        { id: "C", name: "Calendar sync", desc: "Filled in from your calendar", img: "set-c.webp" },
+      ], why: WHY },
+    { id: "colour", type: "image", part: "Layout & look",
+      title: "Which home screen feels most like JOYND?",
+      hint: "Same layout in three colour directions. Tap the one you'd want on your phone.",
+      options: [
+        { id: "A", name: "Warm Daylight", desc: "Light & calm", img: "q1-a.webp" },
+        { id: "B", name: "Navy Night", desc: "Dark & premium", img: "q1-b.webp" },
+        { id: "C", name: "Sunny Social", desc: "Bold yellow header", img: "q1-c.webp" },
+      ], why: WHY },
+    { id: "use", type: "rating", part: "Wrap-up",
+      title: "How likely are you to try JOYND?",
+      hint: "Tap a bar. A low score helps us too.",
+      labels: ["Not likely", "Probably not", "Maybe", "Probably", "Very likely"],
+      short: ["No", "Unlikely", "Maybe", "Likely", "Yes!"],
+      comment: "Anything else?" },
+  ];
+  const N = Q.length;
+
+  const state = { step: -1, a: {}, other: {}, comment: "", saved: null, saving: false, already: false, view: "survey" };
+  Q.forEach(q => {
+    if (q.type === "image") state.a[q.id] = { pick: null, why: [] };
+    else if (q.type === "multi") state.a[q.id] = [];
+    else if (q.type === "scales") state.a[q.id] = {};
+    else state.a[q.id] = null;
+  });
+  const IS_RESULTS = /^\/results\/?$/.test(location.pathname);
+  const env = { canSave: true, isOwner: false, ready: false, key: null, keyError: "" };
+  const store = { get(k) { try { return localStorage.getItem(k); } catch { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch {} } };
+  const sess = { get(k) { try { return sessionStorage.getItem(k); } catch { return null; } }, set(k, v) { try { v == null ? sessionStorage.removeItem(k) : sessionStorage.setItem(k, v); } catch {} } };
+  // A random id per browser, so someone who answers twice replaces their earlier answers instead of counting twice.
+  let rid = store.get("joynd_rid");
+  if (!rid) { rid = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(36).slice(2)); store.set("joynd_rid", rid); }
+  let results = { docs: [], loaded: false }, unsub = null;
+
+  const $ = (s, r = document) => r.querySelector(s);
+  const esc = (t) => String(t ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const main = $("#main");
+  $("#progress").innerHTML = Q.map(() => "<span></span>").join("");
+  // Preload every phone screen so swiping between questions never waits on an image.
+  Q.forEach(q => q.type === "image" && q.options.forEach(o => { const im = new Image(); im.src = o.img; }));
+
+  const answered = (q) => {
+    const v = state.a[q.id];
+    if (q.type === "image") return !!v.pick;
+    if (q.type === "multi") return v.length > 0;
+    if (q.type === "scales") return q.scales.every(s => v[s.id]);
+    return v != null;
+  };
+
+  /* ---------- chrome + routing ---------- */
+  function setChrome() {
+    const inResults = state.view === "results";
+    $("#app").classList.toggle("wide", inResults);
+    $("#progress").hidden = inResults;
+    const done = state.step >= N;
+    [...$("#progress").children].forEach((s, i) => s.classList.toggle("on", done || i <= state.step));
+    $("#stepLabel").textContent = inResults ? "Results" : done ? "All done" : state.step >= 0 ? `${state.step + 1} of ${N}` : "Design research";
+    const tr = $("#toResults"); tr.hidden = !inResults; tr.textContent = "Open survey";
+    const dbg = $("#debugbar"); dbg.hidden = !DEBUG_ON || inResults;
+    if (!dbg.hidden) {
+      $("#dbgJump").innerHTML = [`<option value="-1">Intro</option>`, ...Q.map((q, i) => `<option value="${i}">${i + 1}. ${esc(q.title)}</option>`), `<option value="${N}">Thank you</option>`].join("");
+      $("#dbgJump").value = String(Math.min(state.step, N));
+      $("#dbgPrev").disabled = state.step <= -1; $("#dbgNext").disabled = state.step >= N;
+    }
+  }
+  function go(step) { state.step = step; state.view = "survey"; render(true); }
+  function render(moveFocus) {
+    setChrome();
+    main.innerHTML = state.view === "results" ? resultsView()
+      : state.step < 0 ? intro() : state.step >= N ? thanks() : question(Q[state.step]);
+    bind();
+    if (moveFocus) {
+      window.scrollTo({ top: 0 });
+      const h = main.querySelector("h1, h2"); if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
+    }
+  }
+
+  /* ---------- screens ---------- */
+  function intro() {
+    let note = "";
+    if (state.already) note = `<div class="notice">You've answered before. Sending again replaces your earlier answers.</div>`;
+    return `
+      <p class="eyebrow">Design research · V6 wireframe</p>
+      <h1>Help us shape JOYND<span class="dot">.</span></h1>
+      <p class="lede">${N} quick questions about the idea, the features and the layout. About 3 minutes, almost all tapping.</p>
+      <ul class="steps">
+        <li><span class="num n1">1</span><span><b>Look</b><small>Some questions show phone screens in three versions.</small></span></li>
+        <li><span class="num n2">2</span><span><b>Tap</b><small>Pick what you like. Gut feeling is fine.</small></span></li>
+        <li><span class="num n3">3</span><span><b>Next</b><small>Skip anything optional.</small></span></li>
+      </ul>
+      ${note}
+      <div class="actions"><button class="btn" id="next">Start</button></div>`;
+  }
+
+  function question(q) {
+    const v = state.a[q.id];
+    let body = "";
+    if (q.type === "image") {
+      body = `<p class="zoomtip"><span class="zt-icon" aria-hidden="true">${ZOOM_ICON}</span><span>Tap a screen or <b>Choose</b> to pick it. Tap Zoom to see it up close.</span></p>
+        <span class="swipe">Swipe to see all three →</span>
+        <div class="phones" role="group" aria-label="Options">${q.options.map((o, i) => `
+          <div class="phonewrap">
+          <button class="phone" data-pick="${o.id}" aria-pressed="${v.pick === o.id}" aria-label="Option ${o.id}, ${esc(o.name)}">
+            <span class="shot"><img src="${o.img}" alt="${esc(o.name)} version of the screen" width="480" height="994"></span>
+            <span class="cap"><span class="badge b${o.id}">${o.id}</span><span class="cap-name"><b>${esc(o.name)}</b></span><span class="choose-pill"><span class="cp-off">Choose</span><span class="cp-on">✓ Chosen</span></span></span>
+          </button>
+          <button class="zoombtn" data-zoom="${i}" aria-label="Zoom in">${ZOOM_ICON}<span>Zoom</span></button>
+          </div>`).join("")}</div>
+
+        <div class="chipset"><span class="q">What made you pick it? <small>Optional, tap any</small></span>
+          <div class="chips">${q.why.map(w => `<button class="chip" data-why="${esc(w)}" aria-pressed="${v.why.includes(w)}">${esc(w)}</button>`).join("")}</div></div>`;
+    } else if (q.type === "single" || q.type === "multi") {
+      const multi = q.type === "multi", full = multi && v.length >= q.max;
+      body = `${q.img ? `<div class="solo"><img src="${q.img}" alt="${esc(q.imgAlt || "")}" width="480" height="994"></div>` : ""}${multi ? `<span class="step-label">${q.max ? `${v.length} of ${q.max} picked` : `${v.length} picked`}</span>` : ""}
+        <ul class="choices">${q.options.map(o => {
+          const on = multi ? v.includes(o.id) : v === o.id;
+          return `<li><button class="choice${multi ? " multi" : ""}" data-opt="${o.id}" aria-pressed="${on}" ${full && !on ? "disabled" : ""}>
+            <span class="radio" aria-hidden="true"></span><span><b>${esc(o.name)}</b></span></button>
+            ${o.other && on ? `<input type="text" class="other-input" id="other-${q.id}" data-other="${q.id}" maxlength="120" placeholder="Type it here…" aria-label="Other" value="${esc(state.other[q.id] || "")}">` : ""}</li>`;
+        }).join("")}</ul>`;
+    } else if (q.type === "scales") {
+      body = q.scales.map(s => `<div class="scale-block" role="group" aria-label="${esc(s.left)} to ${esc(s.right)}">
+          <div class="scale">${[1,2,3,4,5].map(n => `<button data-scale="${s.id}" data-n="${n}" aria-pressed="${v[s.id] === n}" aria-label="${n} of 5">${n}</button>`).join("")}</div>
+          <div class="ends"><span>← ${esc(s.left)}</span><span>${esc(s.right)} →</span></div></div>`).join("");
+    } else if (q.type === "rating") {
+      const short = q.short || q.labels;
+      body = `<div class="meter-block" role="group" aria-label="${esc(q.title)}">
+          <div class="readout" aria-live="polite"><b id="rateLabel">${v ? esc(q.labels[v-1]) : "Tap a bar"}</b><span id="rateNum">${v ? v + " / 5" : ""}</span></div>
+          <div class="meter">${[1,2,3,4,5].map(n => `<button data-rate="${n}" class="lvl${n}" aria-pressed="${v === n}" ${v && n <= v ? "data-on" : ""} aria-label="${n}, ${esc(q.labels[n-1])}">
+            <span class="bar" style="height:${30 + n * 16}%"></span><span class="n">${n}</span><small>${esc(short[n-1])}</small></button>`).join("")}</div>
+        </div>
+        <div class="field"><label for="comment">${esc(q.comment)} <small>Optional</small></label>
+          <textarea id="comment" maxlength="500" placeholder="A thought, an idea, a worry…">${esc(state.comment)}</textarea></div>`;
+    }
+    const last = state.step === N - 1;
+    const ok = answered(q);
+    const nextLabel = last ? (state.saving ? "Sending…" : "Send answers") : ok ? "Next" : (q.type === "image" ? "Pick A, B or C" : q.type === "scales" ? "Answer both" : q.type === "multi" ? "Tap at least one" : "Pick one");
+    return `
+      <p class="eyebrow">${String(state.step + 1).padStart(2, "0")} · ${esc(q.part)}</p>
+      <h2>${esc(q.title.replace(/[?.]$/, ""))}<span class="dot">${q.title.slice(-1)}</span></h2>
+      <p class="hint">${esc(q.hint)}</p>
+      ${body}
+      <div class="actions">
+        <button class="btn ghost" id="back">Back</button>
+        <button class="btn" id="next" ${ok && !state.saving ? "" : "disabled"}>${nextLabel}</button>
+      </div>`;
+  }
+
+  function otherAnswers() {
+    const out = {};
+    Q.forEach(q => {
+      const v = state.a[q.id], t = (state.other[q.id] || "").trim();
+      const picked = Array.isArray(v) ? v.includes("other") : v === "other";
+      if (picked && t) out[q.id] = t.slice(0, 120);
+    });
+    return out;
+  }
+
+  function summaryText() {
+    const lines = ["JOYND design survey"];
+    Q.forEach((q, i) => {
+      const v = state.a[q.id];
+      let ans = "-";
+      if (q.type === "image" && v.pick) { const o = q.options.find(x => x.id === v.pick); ans = `${o.id} ${o.name}${v.why.length ? " (" + v.why.join(", ") + ")" : ""}`; }
+      else if (q.type === "single" && v) ans = q.options.find(x => x.id === v).name;
+      else if (q.type === "multi") ans = v.map(id => { const o = q.options.find(x => x.id === id); return o ? (o.other && state.other[q.id] ? `${o.name}: ${state.other[q.id]}` : o.name) : id; }).join(", ") || "-";
+      else if (q.type === "scales") ans = q.scales.map(s => `${s.left} → ${s.right}: ${v[s.id] ?? "-"}/5`).join("; ");
+      else if (q.type === "rating" && v) ans = `${v}/5 ${q.labels[v-1]}`;
+      lines.push(`${i + 1}. ${q.title}\n   ${ans}`);
+    });
+    if (state.comment.trim()) lines.push(`Comment: ${state.comment.trim()}`);
+    return lines.join("\n");
+  }
+
+  function thanks() {
+    const fallback = state.saved ? "" : `
+      <div class="notice"><b>We couldn't reach the server, so your answers weren't saved.</b> Copy them below and send them to the person who shared this survey.</div>
+      <div class="field copybox"><label for="copyText">Your answers</label><textarea id="copyText" readonly>${esc(summaryText())}</textarea></div>
+      <div class="actions"><button class="btn" id="copy">Copy answers</button></div>`;
+    return `
+      <div class="thanks" style="display:flex;flex-direction:column;gap:20px;padding-top:6vh">
+        <p class="eyebrow">That's it</p>
+        <h1>Thank you<span class="dot">.</span></h1>
+        <p class="lede">${state.saved ? "Your answers are in. " : ""}Your picks decide which colours, layouts and features go into the next JOYND build.</p>
+        <div class="pills" aria-hidden="true"><i style="background:var(--orange)"></i><i style="background:var(--yellow)"></i><i style="background:var(--green)"></i><i style="background:var(--navy)"></i></div>
+      </div>${fallback}`;
+  }
+
+  /* ---------- results ---------- */
+  const COLORS = ["var(--yellow)", "var(--orange)", "var(--green)"];
+  const bar = (label, sub, n, max, total, color) => `
+    <div class="hbar"><span class="lbl">${label}${sub ? `<small>${sub}</small>` : ""}</span>
+      <span class="track"><span class="fill" style="width:${max ? (n / max) * 100 : 0}%;background:${color}"></span></span>
+      <span class="val">${n} · ${total ? Math.round(100 * n / total) : 0}%</span></div>`;
+
+  function topLine(items, total, noun) {
+    const sorted = items.slice().sort((a, b) => b.n - a.n);
+    if (!sorted[0] || !sorted[0].n) return `<p class="lead none">No answers yet.</p>`;
+    const tied = sorted.filter(x => x.n === sorted[0].n);
+    if (tied.length > 1) {
+      const names = tied.map(x => `<b>${esc(x.name)}</b>`);
+      const list = names.length === 2 ? names.join(" and ") : names.slice(0, -1).join(", ") + " and " + names[names.length - 1];
+      return `<p class="lead">Tied at the top: ${list}, with ${sorted[0].n} each.</p>`;
+    }
+    return `<p class="lead"><b>${esc(sorted[0].name)}</b> leads, ${noun} by ${sorted[0].n} of ${total}.</p>`;
+  }
+
+  function panelFor(q, rows) {
+    const total = rows.length;
+    if (q.type === "image" || q.type === "single") {
+      const counts = q.options.map((o, i) => ({ ...o, n: rows.filter(r => (q.type === "image" ? r[q.id]?.pick : r[q.id]) === o.id).length, color: q.type === "image" ? COLORS[i] : "var(--navy)" }));
+      const max = Math.max(1, ...counts.map(c => c.n));
+      if (q.type === "single") counts.forEach(c => { if (c.n && c.n === max) c.color = "var(--orange)"; });
+      const list = q.type === "single" ? counts.slice().sort((a, b) => b.n - a.n) : counts;
+      let reasons = "";
+      if (q.type === "image") {
+        reasons = `<div class="reasons"><span class="step-label">Why they picked it</span>${q.options.map(o => {
+          const tally = {};
+          rows.filter(r => r[q.id]?.pick === o.id).forEach(r => (r[q.id].why || []).forEach(w => { tally[w] = (tally[w] || 0) + 1; }));
+          const tags = Object.entries(tally).sort((a, b) => b[1] - a[1]);
+          return `<div class="reasons-row"><span class="badge b${o.id}">${o.id}</span><span class="tags">${tags.length ? tags.map(([w, n]) => `<span class="tag">${esc(w)}<b>${n}</b></span>`).join("") : `<span class="none">No reasons tapped</span>`}</span></div>`;
+        }).join("")}</div>`;
+      }
+      return `<section class="panel"><h3>${esc(q.title)}</h3>
+        ${topLine(counts.map(c => ({ name: q.type === "image" ? `${c.id} · ${c.name}` : c.name, n: c.n })), total, "picked")}
+        <div class="bars">${list.map(c => bar(q.type === "image" ? `${c.id} · ${esc(c.name)}` : esc(c.name), esc(c.desc), c.n, max, total, c.color)).join("")}</div>${reasons}</section>`;
+    }
+    if (q.type === "multi") {
+      const counts = q.options.map(o => ({ ...o, n: rows.filter(r => (r[q.id] || []).includes(o.id)).length })).sort((a, b) => b.n - a.n);
+      const max = Math.max(1, ...counts.map(c => c.n));
+      const typed = rows.map(r => r._other && r._other[q.id]).filter(t => t && String(t).trim());
+      const typedBlock = q.options.some(o => o.other) ? `<div class="reasons"><span class="step-label">Typed under \u201cOther\u201d</span>${typed.length ? `<ul class="quotes">${typed.map(t => `<li>${esc(t)}</li>`).join("")}</ul>` : `<span class="none">Nothing typed yet</span>`}</div>` : "";
+      return `<section class="panel"><h3>${esc(q.title)}</h3><p class="sub">${esc(q.sub || "")}</p>
+        ${topLine(counts, total, "chosen")}
+        <div class="bars">${counts.map((c, i) => bar(esc(c.name), esc(c.desc), c.n, max, total, c.n && c.n === counts[0].n ? "var(--orange)" : "var(--navy)")).join("")}</div>${typedBlock}</section>`;
+    }
+    if (q.type === "scales") {
+      return `<section class="panel"><h3>${esc(q.title)}</h3><p class="sub">How many people tapped each number. The orange bar is the most common answer.</p>
+        ${q.scales.map(s => distBlock(rows.map(r => r[q.id]?.[s.id]).filter(Boolean), s.left, s.right, ["1", "2", "3", "4", "5"])).join("")}</section>`;
+    }
+    if (q.type === "rating") {
+      return `<section class="panel"><h3>${esc(q.title)}</h3><p class="sub">1 = not likely, 5 = very likely.</p>
+        ${distBlock(rows.map(r => r[q.id]).filter(Boolean), q.labels[0], q.labels[4], q.labels)}</section>`;
+    }
+    return "";
+  }
+
+  function distBlock(vals, left, right, axis) {
+    const counts = [1, 2, 3, 4, 5].map(n => vals.filter(v => v === n).length);
+    const max = Math.max(1, ...counts), top = Math.max(...counts);
+    const avg = vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null;
+    let verdict = "No answers yet.";
+    if (avg != null) verdict = avg < 2.6 ? `Leans <b>${esc(left.toLowerCase())}</b>` : avg > 3.4 ? `Leans <b>${esc(right.toLowerCase())}</b>` : `<b>Right in the middle</b>`;
+    return `<div style="display:grid;gap:8px">
+      <p class="lead">${verdict}${avg != null ? ` · average ${avg.toFixed(1)} of 5` : ""}</p>
+      <div class="dist">${counts.map(c => `<div class="${c && c === top ? "top" : ""}"><span>${c}</span><i style="height:${(c / max) * 72}px"></i></div>`).join("")}</div>
+      <div class="dist-axis">${axis.map(a => `<span>${esc(a)}</span>`).join("")}</div>
+      <div class="ends"><span>← ${esc(left)}</span><span>${esc(right)} →</span></div></div>`;
+  }
+
+  function resultsView() {
+    if (!env.key) return `<p class="eyebrow">JOYND design survey</p><h2>Results<span class="dot">.</span></h2>
+      <form class="keyform" id="keyForm" autocomplete="off">
+        <label for="keyInput">Results password</label>
+        <div class="keyrow"><input type="password" id="keyInput" required autofocus><button class="btn" type="submit">Open</button></div>
+        ${env.keyError ? `<p class="keyerr">${esc(env.keyError)}</p>` : `<p class="hint">This is the RESULTS_KEY you set when starting the server.</p>`}
+      </form>`;
+    if (!results.loaded) return `<p class="eyebrow">Results</p><h2>Loading answers…</h2>`;
+    const rows = results.docs.map(d => d.data()).filter(r => r && r.v === 3).map(r => ({ ...(r.answers || {}), _comment: r.comment }))
+      // Older test answers used an option that was later merged: count it under the new one.
+      .map(r => Array.isArray(r.connect) ? { ...r, connect: [...new Set(r.connect.map(x => x === "whatsapp" ? "social" : x))] } : r);
+    const head = (n) => `<div class="res-head"><div><p class="eyebrow">JOYND design survey</p><h2>Results<span class="dot">.</span></h2></div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px"><div class="count"><strong>${n}</strong><span>${n === 1 ? "response" : "responses"}</span></div><span class="live">Live · updates by itself</span></div></div>`;
+    if (!rows.length) return `${head(0)}<div class="empty"><h3 style="margin:0;font:900 22px/1.1 var(--display);font-stretch:112%">No answers yet</h3>
+      <p class="hint">A chart for every question appears here as soon as the first person sends their answers. Take the survey yourself to see how it looks.</p></div>`;
+    const by = (ids) => Q.filter(q => ids.includes(q.id)).map(q => panelFor(q, rows)).join("");
+    const comments = rows.map(r => r._comment).filter(c => c && String(c).trim());
+    return `${head(rows.length)}
+      <div class="grid">
+        <p class="eyebrow section-label">Today</p>
+        ${by(["today", "planning", "pain", "connect"])}
+        <p class="eyebrow section-label">The idea &amp; features</p>
+        ${by(["want", "features", "who"])}
+        <p class="eyebrow section-label">Layout & look</p>
+        ${by(["home", "chatlayout", "calendar", "setfree", "colour"])}
+        <p class="eyebrow section-label">Wrap-up</p>
+        ${by(["use"])}
+        <section class="panel"><h3>Anything else?</h3>
+          ${comments.length ? `<ul class="quotes">${comments.map(c => `<li>${esc(c)}</li>`).join("")}</ul>` : `<p class="none">No comments yet.</p>`}</section>
+      </div>`;
+  }
+
+  async function fetchResults() {
+    try {
+      const r = await fetch("/api/responses", { headers: { Authorization: "Bearer " + env.key }, cache: "no-store" });
+      if (r.status === 401) { env.key = null; sess.set("joynd_key", null); env.keyError = "That password is wrong. Try again."; stopResults(); render(false); return; }
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      const list = await r.json();
+      const sig = JSON.stringify(list.map(x => x.updatedAt));
+      if (sig !== results.sig || !results.loaded) {
+        results = { docs: list.map(x => ({ data: () => x })), loaded: true, sig };
+        if (state.view === "results") render(false);
+      }
+    } catch { if (!results.loaded) { results.loaded = true; render(false); } }
+  }
+  function startResults() {
+    if (unsub || !env.key) return;
+    fetchResults();
+    const t = setInterval(fetchResults, 10000);   // "live": check for new answers every 10 seconds
+    unsub = () => clearInterval(t);
+  }
+  function stopResults() { if (unsub) { unsub(); unsub = null; } }
+
+  /* ---------- events ---------- */
+  function refreshNext() {
+    const q = Q[state.step], n = $("#next"); if (!q || !n || state.step === N - 1) { if (n && q) n.disabled = !answered(q); return; }
+    n.disabled = !answered(q); n.textContent = answered(q) ? "Next" : n.textContent;
+  }
+  function bind() {
+    const next = $("#next"), back = $("#back");
+    if (next) next.onclick = () => (state.step === N - 1 ? submit() : go(state.step + 1));
+    if (back) back.onclick = () => go(state.step - 1);
+    const q = Q[state.step];
+
+    main.querySelectorAll("[data-pick]").forEach(b => b.onclick = () => {
+      state.a[q.id].pick = b.dataset.pick;
+      main.querySelectorAll("[data-pick]").forEach(x => x.setAttribute("aria-pressed", x === b));
+      refreshNext();
+    });
+    main.querySelectorAll("[data-zoom]").forEach(b => b.onclick = () => openViewer(q, +b.dataset.zoom));
+    main.querySelectorAll("[data-why]").forEach(b => b.onclick = () => {
+      const arr = state.a[q.id].why, w = b.dataset.why, i = arr.indexOf(w);
+      if (i >= 0) arr.splice(i, 1); else arr.push(w);
+      b.setAttribute("aria-pressed", i < 0);
+    });
+    main.querySelectorAll("[data-opt]").forEach(b => b.onclick = () => {
+      const id = b.dataset.opt;
+      if (q.type === "single") state.a[q.id] = id;
+      else { const arr = state.a[q.id], i = arr.indexOf(id); if (i >= 0) arr.splice(i, 1); else if (!q.max || arr.length < q.max) arr.push(id); }
+      render(false);
+      const box = main.querySelector(`[data-other="${q.id}"]`);
+      if (id === "other" && box) box.focus(); else { const again = main.querySelector(`[data-opt="${id}"]`); if (again) again.focus(); }
+    });
+    main.querySelectorAll("[data-scale]").forEach(b => b.onclick = () => {
+      state.a[q.id][b.dataset.scale] = +b.dataset.n;
+      main.querySelectorAll(`[data-scale="${b.dataset.scale}"]`).forEach(x => x.setAttribute("aria-pressed", x === b));
+      refreshNext();
+    });
+    main.querySelectorAll("[data-rate]").forEach(b => b.onclick = () => {
+      state.a[q.id] = +b.dataset.rate;
+      const nv = state.a[q.id];
+      main.querySelectorAll("[data-rate]").forEach(x => { x.setAttribute("aria-pressed", x === b); x.toggleAttribute("data-on", +x.dataset.rate <= nv); });
+      $("#rateLabel").textContent = q.labels[nv - 1];
+      $("#rateNum").textContent = nv + " / 5";
+      refreshNext();
+    });
+    const c = $("#comment"); if (c) c.oninput = () => { state.comment = c.value; };
+    main.querySelectorAll("[data-other]").forEach(el => el.oninput = () => { state.other[el.dataset.other] = el.value; });
+    const kf = $("#keyForm"); if (kf) kf.onsubmit = (e) => {
+      e.preventDefault(); const k = $("#keyInput").value.trim(); if (!k) return;
+      env.key = k; env.keyError = ""; sess.set("joynd_key", k); results = { docs: [], loaded: false }; render(false); startResults();
+    };
+    const copy = $("#copy"); if (copy) copy.onclick = async () => {
+      const ta = $("#copyText");
+      try { await navigator.clipboard.writeText(ta.value); copy.textContent = "Copied"; }
+      catch { ta.focus(); ta.select(); copy.textContent = "Selected: copy it now"; }
+    };
+  }
+
+  /* ---------- full-screen viewer for the phone screens ----------
+     Pinch, double-tap or scroll-wheel to zoom; drag to pan; swipe sideways to
+     compare A/B/C; swipe down (or Esc) to close. Everything runs on CSS
+     transforms so it stays smooth on phones. */
+  const REDUCED = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const EASE = "cubic-bezier(.2,.8,.2,1)";
+  const hd = (src) => src.replace(/\.webp$/, "-hd.webp");
+  const V = { q: null, i: 0, imgs: [], s: 1, tx: 0, ty: 0, w: 0, h: 0, sw: 0, sh: 0, open: false };
+  const vEl = $("#viewer"), stage = $("#vStage"), track = $("#vTrack"), back = $("#vBack");
+
+  function layoutViewer() {
+    const r = stage.getBoundingClientRect(); V.sw = r.width; V.sh = r.height;
+    const ar = 480 / 994, pad = 16;
+    V.h = Math.min(V.sh - pad, (V.sw - pad * 2) / ar); V.w = V.h * ar;
+    V.imgs.forEach(im => { im.style.width = V.w + "px"; im.style.height = V.h + "px"; });
+    setTrack(0, false);
+  }
+  function setTrack(dx, animate) {
+    track.style.transition = animate && !REDUCED ? `transform .38s ${EASE}` : "none";
+    track.style.transform = `translate3d(${-V.i * V.sw + dx}px,0,0)`;
+  }
+  function clampPan() {
+    const mx = Math.max(0, (V.w * V.s - V.sw) / 2), my = Math.max(0, (V.h * V.s - V.sh) / 2);
+    V.tx = Math.min(mx, Math.max(-mx, V.tx)); V.ty = Math.min(my, Math.max(-my, V.ty));
+  }
+  function applyZoom(animate) {
+    const im = V.imgs[V.i]; if (!im) return;
+    im.style.transition = animate && !REDUCED ? `transform .3s ${EASE}` : "none";
+    im.style.transform = `translate3d(${V.tx}px,${V.ty}px,0) scale(${V.s})`;
+    stage.classList.toggle("zoomed", V.s > 1.01);
+    vEl.classList.toggle("ui-hidden", V.s > 1.01);
+  }
+  function zoomAt(newS, px, py, animate) {
+    // keep the point under the finger/cursor (px,py relative to stage centre) fixed
+    newS = Math.min(4, Math.max(1, newS));
+    const qx = (px - V.tx) / V.s, qy = (py - V.ty) / V.s;
+    V.s = newS; V.tx = px - newS * qx; V.ty = py - newS * qy;
+    if (V.s <= 1.001) { V.s = 1; V.tx = 0; V.ty = 0; }
+    clampPan(); applyZoom(animate);
+  }
+  function resetZoom(animate) { V.s = 1; V.tx = 0; V.ty = 0; applyZoom(animate); }
+  function stagePoint(e) { const r = stage.getBoundingClientRect(); return [e.clientX - r.left - r.width / 2, e.clientY - r.top - r.height / 2]; }
+
+  function updateViewerChrome() {
+    const o = V.q.options[V.i], chosen = state.a[V.q.id].pick === o.id;
+    $("#vBadge").textContent = o.id; $("#vBadge").className = "badge b" + o.id;
+    $("#vTitle").textContent = o.name; $("#vDesc").textContent = "";
+    $("#vDots").innerHTML = V.q.options.map((_, k) => `<i class="${k === V.i ? "on" : ""}"></i>`).join("");
+    const btn = $("#vChoose"); btn.textContent = chosen ? `✓ ${o.id}` : `Choose ${o.id}`; btn.classList.toggle("chosen", chosen);
+    if (window.__tr) window.__tr(vEl);
+  }
+  function goTo(i, animate = true) {
+    const n = V.q.options.length; i = (i + n) % n;
+    if (V.s > 1) { resetZoom(animate); }
+    V.i = i; setTrack(0, animate); updateViewerChrome();
+  }
+
+  function cardImg(i) { return main.querySelectorAll(".phonewrap .shot img")[i]; }
+  function flipFrom(el) {
+    // animate the zoomed image from where the card sits on the page
+    const im = V.imgs[V.i]; if (!el || !im || REDUCED) return;
+    const a = el.getBoundingClientRect(), b = im.getBoundingClientRect();
+    if (!b.width) return;
+    const sx = a.width / b.width, dx = a.left + a.width / 2 - (b.left + b.width / 2), dy = a.top + a.height / 2 - (b.top + b.height / 2);
+    im.animate([{ transform: `translate3d(${dx}px,${dy}px,0) scale(${sx})`, borderRadius: "20px" }, { transform: "translate3d(0,0,0) scale(1)", borderRadius: "24px" }], { duration: 340, easing: EASE });
+  }
+  function openViewer(q, i) {
+    V.q = q; V.i = i; V.s = 1; V.tx = 0; V.ty = 0; V.open = true; V.opener = document.activeElement;
+    track.innerHTML = q.options.map(o => `<div class="v-slide"><img src="${o.img}" alt="${esc(o.name)}" draggable="false"></div>`).join("");
+    V.imgs = [...track.querySelectorAll("img")];
+    // swap in the sharp version as soon as it has loaded
+    V.imgs.forEach((im, k) => { const pre = new Image(); pre.onload = () => { im.src = pre.src; }; pre.src = hd(q.options[k].img); });
+    vEl.hidden = false; vEl.classList.remove("ui-hidden"); document.body.style.overflow = "hidden";
+    layoutViewer(); applyZoom(false); updateViewerChrome();
+    back.style.transition = REDUCED ? "none" : "opacity .3s";
+    back.style.opacity = "0"; requestAnimationFrame(() => { back.style.opacity = "1"; });
+    flipFrom(cardImg(i));
+    $("#vClose").focus({ preventScroll: true });
+  }
+  function closeViewer() {
+    if (!V.open) return; V.open = false;
+    const im = V.imgs[V.i], card = cardImg(V.i);
+    const done = () => {
+      vEl.hidden = true; document.body.style.overflow = ""; vEl.style.transform = ""; back.style.opacity = "0";
+      const f = main.querySelector(`[data-zoom="${V.i}"]`); if (f) f.focus({ preventScroll: true });
+    };
+    back.style.opacity = "0";
+    vEl.classList.add("ui-hidden");
+    if (REDUCED || !im || !card) return done();
+    card.scrollIntoView({ block: "nearest", inline: "center" });
+    const a = card.getBoundingClientRect(), b = im.getBoundingClientRect();
+    const sx = a.width / b.width, dx = a.left + a.width / 2 - (b.left + b.width / 2), dy = a.top + a.height / 2 - (b.top + b.height / 2);
+    const cur = getComputedStyle(im).transform;
+    im.animate([{ transform: cur === "none" ? "none" : cur }, { transform: `translate3d(${dx}px,${dy}px,0) scale(${sx})` }], { duration: 280, easing: EASE, fill: "forwards" }).onfinish = done;
+  }
+
+  /* gestures */
+  const ptr = new Map(); let g = null, lastTap = { t: 0, x: 0, y: 0 };
+  stage.addEventListener("pointerdown", (e) => {
+    stage.setPointerCapture(e.pointerId);
+    ptr.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (ptr.size === 2) {
+      const [p1, p2] = [...ptr.values()];
+      const mid = stagePoint({ clientX: (p1.x + p2.x) / 2, clientY: (p1.y + p2.y) / 2 });
+      g = { type: "pinch", d0: Math.hypot(p1.x - p2.x, p1.y - p2.y), s0: V.s, tx0: V.tx, ty0: V.ty, m0: mid };
+      setTrack(0, true);
+    } else if (ptr.size === 1) {
+      g = { type: null, x0: e.clientX, y0: e.clientY, t0: performance.now(), tx0: V.tx, ty0: V.ty, moved: false };
+    }
+  });
+  stage.addEventListener("pointermove", (e) => {
+    if (!ptr.has(e.pointerId) || !g) return;
+    ptr.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (g.type === "pinch" && ptr.size >= 2) {
+      const [p1, p2] = [...ptr.values()];
+      const d = Math.hypot(p1.x - p2.x, p1.y - p2.y);
+      const mid = stagePoint({ clientX: (p1.x + p2.x) / 2, clientY: (p1.y + p2.y) / 2 });
+      // scale around the first midpoint, then follow the fingers as they move
+      const ns = Math.min(5, Math.max(0.8, g.s0 * d / g.d0));
+      const qx = (g.m0[0] - g.tx0) / g.s0, qy = (g.m0[1] - g.ty0) / g.s0;
+      V.s = ns; V.tx = mid[0] - ns * qx; V.ty = mid[1] - ns * qy;
+      applyZoom(false); return;
+    }
+    const dx = e.clientX - g.x0, dy = e.clientY - g.y0;
+    if (!g.moved && Math.hypot(dx, dy) > 8) {
+      g.moved = true; stage.classList.add("dragging");
+      g.type = V.s > 1.01 ? "pan" : Math.abs(dx) > Math.abs(dy) ? "swipe" : dy > 0 ? "dismiss" : "none";
+    }
+    if (g.type === "pan") { V.tx = g.tx0 + dx; V.ty = g.ty0 + dy; clampPan(); applyZoom(false); }
+    else if (g.type === "swipe") {
+      const edge = (V.i === 0 && dx > 0) || (V.i === V.q.options.length - 1 && dx < 0);
+      setTrack(edge ? dx * 0.35 : dx, false);
+    } else if (g.type === "dismiss") {
+      const k = Math.max(0, dy);
+      vEl.style.transform = `translate3d(0,${k}px,0)`; vEl.style.transition = "none";
+      back.style.transition = "none"; back.style.opacity = String(Math.max(0.15, 1 - k / 400));
+    }
+  });
+  function endPointer(e) {
+    if (!ptr.has(e.pointerId)) return;
+    ptr.delete(e.pointerId);
+    if (!g) return;
+    if (g.type === "pinch") {
+      if (ptr.size === 0) {
+        if (V.s < 1.05) resetZoom(true); else { if (V.s > 4) zoomAt(4, 0, 0, true); clampPan(); applyZoom(true); }
+        g = null;
+      } else {
+        // one finger lifted: continue as a pan with the remaining finger
+        const p = [...ptr.values()][0]; g = { type: V.s > 1.01 ? "pan" : null, x0: p.x, y0: p.y, t0: performance.now(), tx0: V.tx, ty0: V.ty, moved: true };
+      }
+      return;
+    }
+    stage.classList.remove("dragging");
+    const dx = e.clientX - g.x0, dy = e.clientY - g.y0, dt = performance.now() - g.t0;
+    if (!g.moved && dt < 300) {
+      // tap: double-tap toggles zoom at that spot
+      const now = performance.now();
+      if (now - lastTap.t < 320 && Math.hypot(e.clientX - lastTap.x, e.clientY - lastTap.y) < 30) {
+        const [px, py] = stagePoint(e);
+        if (V.s > 1.01) resetZoom(true); else zoomAt(2.5, px, py, true);
+        lastTap.t = 0;
+      } else lastTap = { t: now, x: e.clientX, y: e.clientY };
+    } else if (g.type === "swipe") {
+      const v = dx / Math.max(dt, 1);
+      if ((dx < -V.sw * 0.18 || v < -0.5) && V.i < V.q.options.length - 1) goTo(V.i + 1);
+      else if ((dx > V.sw * 0.18 || v > 0.5) && V.i > 0) goTo(V.i - 1);
+      else setTrack(0, true);
+    } else if (g.type === "dismiss") {
+      const v = dy / Math.max(dt, 1);
+      vEl.style.transition = REDUCED ? "none" : `transform .28s ${EASE}`; back.style.transition = "opacity .28s";
+      if (dy > 120 || v > 0.6) { vEl.style.transform = `translate3d(0,${V.sh}px,0)`; back.style.opacity = "0"; setTimeout(() => { V.open = false; vEl.hidden = true; vEl.style.transform = ""; vEl.style.transition = ""; document.body.style.overflow = ""; }, REDUCED ? 0 : 280); }
+      else { vEl.style.transform = ""; back.style.opacity = "1"; }
+    }
+    g = null;
+  }
+  stage.addEventListener("pointerup", endPointer);
+  stage.addEventListener("pointercancel", endPointer);
+  stage.addEventListener("wheel", (e) => {
+    e.preventDefault();
+    const [px, py] = stagePoint(e);
+    zoomAt(V.s * Math.exp(-e.deltaY * (e.ctrlKey ? 0.01 : 0.0025)), px, py, false);
+  }, { passive: false });
+  window.addEventListener("resize", () => { if (V.open) { layoutViewer(); resetZoom(false); } });
+
+  $("#vClose").onclick = closeViewer;
+  back.onclick = closeViewer;
+  $("#vPrev").onclick = () => goTo(V.i - 1);
+  $("#vNext").onclick = () => goTo(V.i + 1);
+  $("#vChoose").onclick = () => {
+    const o = V.q.options[V.i];
+    state.a[V.q.id].pick = o.id; updateViewerChrome();
+    main.querySelectorAll("[data-pick]").forEach(x => x.setAttribute("aria-pressed", x.dataset.pick === o.id));
+    refreshNext();
+    setTimeout(closeViewer, REDUCED ? 0 : 250);
+  };
+  document.addEventListener("keydown", (e) => {
+    if (!V.open) return;
+    if (e.key === "Escape") closeViewer();
+    else if (e.key === "ArrowLeft") goTo(V.i - 1);
+    else if (e.key === "ArrowRight") goTo(V.i + 1);
+    else if (e.key === "+" || e.key === "=") zoomAt(V.s * 1.5, 0, 0, true);
+    else if (e.key === "-") zoomAt(V.s / 1.5, 0, 0, true);
+  });
+  function showViewer() { if (V.open) updateViewerChrome(); }
+
+  async function submit() {
+    if (state.saving) return;
+    state.saving = true; render(false);
+    let ok = false;
+    const body = { rid, v: 3, submittedAt: new Date().toISOString(), answers: { ...JSON.parse(JSON.stringify(state.a)), _other: otherAnswers() }, comment: state.comment.trim().slice(0, 500) };
+    for (let attempt = 0; attempt < 2 && !ok; attempt++) {
+      try {
+        const r = await fetch("/api/responses", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+        if (r.ok) { ok = true; store.set("joynd_done", "1"); break; }
+        if (r.status < 500 && r.status !== 429) break;
+      } catch {}
+      await new Promise(res => setTimeout(res, 700 + Math.random() * 700));
+    }
+    state.saving = false; state.saved = ok;
+    go(N);
+  }
+
+  /* DEBUG controls (owner only) */
+  $("#dbgPrev").onclick = () => go(Math.max(-1, state.step - 1));
+  $("#dbgNext").onclick = () => go(Math.min(N, state.step + 1));
+  $("#dbgJump").onchange = (e) => go(+e.target.value);
+  if (DEBUG) console.warn("JOYND survey: DEBUG skip controls are ON (open with ?debug). Set DEBUG = false before release.");
+
+  window.__rerender = () => { render(false); showViewer(); };
+  document.querySelectorAll("[data-lang]").forEach(b => b.onclick = () => window.__setLang(b.dataset.lang));
+
+  $("#toResults").onclick = () => {
+    if (state.view === "results") { state.view = "survey"; render(true); }
+    else { state.view = "results"; startResults(); render(true); }
+  };
+  if (IS_RESULTS) $("#toResults").onclick = () => { location.href = "/"; };
+
+  /* ---------- start ---------- */
+  state.already = store.get("joynd_done") === "1";
+  env.ready = true;
+  if (IS_RESULTS) { state.view = "results"; env.key = sess.get("joynd_key"); startResults(); }
+  render(false);
+})();
+</script>
+
+</body>
+</html>
