@@ -702,6 +702,19 @@ textarea:focus { outline: none; border-color: var(--navy); }
   $("#progress").innerHTML = Q.map(() => "<span></span>").join("");
   // Preload every phone screen so swiping between questions never waits on an image.
   Q.forEach(q => q.type === "image" && q.options.forEach(o => { const im = new Image(); im.src = o.img; }));
+  // Some in-app browsers (Messenger, Instagram) fail to load the .webp screens. If one breaks,
+  // switch it to the .jpg copy, then retry that once more before giving up.
+  document.addEventListener("error", (e) => {
+    const im = e.target;
+    if (!(im instanceof HTMLImageElement)) return;
+    const src = im.getAttribute("src") || "";
+    const tries = Number(im.dataset.tries || 0);
+    if (tries >= 2) return;
+    im.dataset.tries = tries + 1;
+    const jpg = src.replace(/-hd\.webp$/, ".webp").replace(/\.webp$/, ".jpg").split("?")[0];
+    if (!/\.jpg$/.test(jpg)) return;
+    setTimeout(() => { im.src = tries ? `${jpg}?r=${Date.now()}` : jpg; }, tries ? 800 : 0);
+  }, true);
 
   const answered = (q) => {
     const v = state.a[q.id];
