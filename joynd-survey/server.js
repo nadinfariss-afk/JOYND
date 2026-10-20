@@ -103,6 +103,12 @@ function csvCell(v) {
 
 /* ---------- server ---------- */
 const server = http.createServer(async (req, res) => {
+  // A link like "…app//results" would make "//x" parse as a host and every file would get the page back,
+  // so send the browser to the cleaned-up address first.
+  if (/\/\//.test(req.url.split("?")[0])) {
+    res.writeHead(301, { Location: req.url.replace(/^[^?]*/, (p) => p.replace(/\/{2,}/g, "/")), ...SECURITY });
+    return res.end();
+  }
   const url = new URL(req.url, "http://localhost");
   const p = url.pathname;
   try {
